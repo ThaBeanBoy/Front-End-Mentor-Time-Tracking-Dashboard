@@ -1,29 +1,29 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon-32x32.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class='bg-very-dark-blue text-pale-blue'>
-		<slot />
-	</body>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='Astro description' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon-32x32.png' />
+    <meta name='generator' content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class='bg-very-dark-blue font-main text-pale-blue'>
+    <slot />
+  </body>
 </html>
 <style is:global>
-	@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
-	html {
-		font-family: 'Rubik', sans-serif;
-		font-size: 18px
-	}
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
+  html {
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
+  }
 </style>

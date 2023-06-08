@@ -1,7 +1,25 @@
-export default function Buttons(){
-    const timespans = ['Daily', 'Weekly', 'Monthly'];
+import { useStore } from '@nanostores/react';
+import { timeSpans, activeTimeSpan } from '../timeSpanStore';
 
-    return (<div id="timespans">
-    {timespans.map((timespan, key)=><button className='block mb-[16px] last:mb-0' key={key}>{timespan}</button>)}
-  </div>);
+export default function Buttons() {
+  return (
+    <div id='timespans' className='p-[32px]'>
+      {timeSpans.map((timespan, key) => {
+        const $active = useStore(activeTimeSpan);
+        const isActive = timespan === $active;
+
+        const handleClick = () => activeTimeSpan.set(timespan);
+
+        return (
+          <button
+            className={`mb-[16px] block last:mb-0 ${isActive && 'text-white'}`}
+            key={key}
+            onClick={handleClick}
+          >
+            {timespan}
+          </button>
+        );
+      })}
+    </div>
+  );
 }

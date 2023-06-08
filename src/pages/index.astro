@@ -2,38 +2,32 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
-import userDP from '../images/image-jeremy.png'
+import userDP from '../images/image-jeremy.png';
 import { Image, Picture } from '@astrojs/image/components';
 
-const timespans = ['Daily', 'Weekly', 'Monthly']
+const timespans = ['Daily', 'Weekly', 'Monthly'];
 
 import Buttons from '../components/Buttons.tsx';
 ---
 
 <Layout title='Time Tracking Dashboard'>
-  <main>
-    <div id="user">
-      <div id="user-details">
-        <Image src={userDP} alt='user display'/>
-        <p class='text-[14px]'>Report for</p>
-        <h1 class='text-[40px]'>Jeremey Robson</h1>
-      </div>
+  <main class='mx-auto w-full max-w-[1110px]'>
+    <div id='dashboard' class='grid grid-cols-4'>
+      <div id='user' class='rounded-[16px] bg-dark-blue'>
+        <div id='user-details' class='rounded-[16px] bg-blue p-[32px]'>
+          <Image
+            src={userDP}
+            alt='user display'
+            width={84}
+            height={84}
+            class='mb-[34px]'
+          />
+          <p class='text-[14px]'>Report for</p>
+          <h1 class='text-[40px] text-white'>Jeremey Robson</h1>
+        </div>
 
-      <!-- <div id="timespans">
-        {timespans.map(timespan=><button class='block mb-[16px] last:mb-0'>{timespan}</button>)}
-      </div> -->
-      <Buttons client:load/>
+        <Buttons client:load />
+      </div>
     </div>
   </main>
 </Layout>
-
-<script>
-  const buttons = document.querySelectorAll('#timespans button');
-  console.log(buttons)
-
-  // Adding event listener
-  buttons.forEach(button => {
-    console.log(button)
-    button.addEventListener('click', ()=>console.log('hi'))
-  });
-</script>
