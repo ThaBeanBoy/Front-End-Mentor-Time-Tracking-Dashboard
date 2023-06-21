@@ -3,6 +3,10 @@ module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      screens: {
+        brk: '570px',
+      },
+
       colors: {
         // PRIMARY
         blue: 'hsl(246, 80%, 60%)',

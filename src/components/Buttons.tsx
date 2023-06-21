@@ -1,22 +1,25 @@
 import { useStore } from '@nanostores/react';
-import { timeSpans, activeTimeSpan } from '../timeSpanStore';
+import { timeFrames, activeTimeFrame } from '../timeFramesStore';
 
 export default function Buttons() {
   return (
-    <div id='timespans' className='p-[32px]'>
-      {timeSpans.map((timespan, key) => {
-        const $active = useStore(activeTimeSpan);
-        const isActive = timespan === $active;
+    <div
+      id='timeframes'
+      className='flex w-full items-start justify-between gap-4 p-8 brk:flex-col'
+    >
+      {timeFrames.map((timeFrame, key) => {
+        const $active = useStore(activeTimeFrame);
+        const isActive = timeFrame === $active;
 
-        const handleClick = () => activeTimeSpan.set(timespan);
+        const handleClick = () => activeTimeFrame.set(timeFrame);
 
         return (
           <button
-            className={`mb-[16px] block last:mb-0 ${isActive && 'text-white'}`}
+            className={`${isActive && 'text-white'}`}
             key={key}
             onClick={handleClick}
           >
-            {timespan}
+            {timeFrame}
           </button>
         );
       })}
