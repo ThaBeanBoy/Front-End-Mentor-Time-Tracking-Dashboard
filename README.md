@@ -20,6 +20,8 @@ This is a solution to the [Time tracking dashboard challenge on Frontend Mentor]
       - [Installing astro packages](#installing-astro-packages)
       - [Using Js Frameworks \& Libraries](#using-js-frameworks--libraries)
       - [Sharing state between islands](#sharing-state-between-islands)
+        - [Making the store](#making-the-store)
+        - [Using values from the store](#using-values-from-the-store)
     - [Continued development](#continued-development)
     - [Useful resources](#useful-resources)
   - [Perfomance](#perfomance)
@@ -157,6 +159,8 @@ import DashboardCard from '../components/DashboardCard';
 
 #### Sharing state between islands
 
+##### Making the store
+
 This was the trickiest part for me, but before I explain 'sharing state between islands', we first need to understand why we had to share state between them in the first place.
 
 Making a component, which has it's own state is easy, but when the user clicks `Daily`, `Weekly` or `Monthly`, the content of each [Dashboard](./src/components/DashboardCard.tsx) has to update and display the correct information. In order to achieve this, I made the use of [Nano Store](https://docs.astro.build/en/core-concepts/sharing-state/).
@@ -175,13 +179,52 @@ export const timeFrames: timeFrameTypes[] = ['Daily', 'Weekly', 'Monthly'];
 export const activeTimeFrame = atom<timeFrameTypes>('Weekly');
 ```
 
-**line 1** `import { atom } from 'nanostores';` - I import `atom` from nanostores. The reason I used atom is because we are going to store a string, nothing complicated.
+`import { atom } from 'nanostores';` - I import `atom` from nanostores. The reason I used atom is because we are going to store a string, nothing complicated.
 
-**line 3** `type timeFrameTypes = 'Daily' | 'Weekly' | 'Monthly';` - This is typescript, and I wanted to leverage it by restricting the type of value the string would contain, Similar to using a enum. because of this, we know that there can only be 3 different values, & when we set the value, we are only restricted to those 3 values. This is why I love [Typescript](https://www.typescriptlang.org/).
+`type timeFrameTypes = 'Daily' | 'Weekly' | 'Monthly';` - This is typescript, and I wanted to leverage it by restricting the type of value the string would contain, Similar to using a enum. because of this, we know that there can only be 3 different values, & when we set the value, we are only restricted to those 3 values. This is why I love [Typescript](https://www.typescriptlang.org/).
 
-**line 5** `export const timeFrames: timeFrameTypes[] = ['Daily', 'Weekly', 'Monthly'];` - I wanted to store the 3 different values in an array, this is important for [buttons component](./src/components/Buttons.tsx). I used this array to display the 3 different time frames & assign event listeners to them.
+`export const timeFrames: timeFrameTypes[] = ['Daily', 'Weekly', 'Monthly'];` - I wanted to store the 3 different values in an array, this is important for [buttons component](./src/components/Buttons.tsx). I used this array to display the 3 different time frames & assign event listeners to them.
 
-**line 6** `export const activeTimeFrame = atom<timeFrameTypes>('Weekly');` - Export the store.
+`export const activeTimeFrame = atom<timeFrameTypes>('Weekly');` - Export the store. We also assign the type that the atom store holds by using Generics, (the angle brackets < & >)
+
+##### Using values from the store
+
+**[Buttons](./src/components/Buttons.tsx)**
+
+```astro
+import { useStore } from '@nanostores/react';
+import { timeFrames, activeTimeFrame } from '../timeFramesStore';
+
+export default function Buttons() {
+  return (
+    <div
+      id='timeframes'
+      className='flex w-full items-start justify-between gap-4 p-8 brk:flex-col'
+    >
+      {timeFrames.map((timeFrame, key) => {
+        const $active = useStore(activeTimeFrame);
+        const isActive = timeFrame === $active;
+
+        const handleClick = () => activeTimeFrame.set(timeFrame);
+
+        return (
+          <button
+            className={`${isActive && 'text-white'}`}
+            key={key}
+            onClick={handleClick}
+          >
+            {timeFrame}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+```
+
+`import { timeFrames, activeTimeFrame } from '../timeFramesStore';` - activeTimeFrame stores the current value/state. in order to get it's value, we place the store inside the useStore method. I remember while reading the docs, it said that you have to prefix the variable name with `$`. This is how we end up with `const $active = useStore(activeTimeFrame);`.
+
+in order to update the state, we use the `.set(/* new state */)` method
 
 ### Continued development
 
