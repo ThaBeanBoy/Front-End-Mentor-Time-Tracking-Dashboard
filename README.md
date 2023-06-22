@@ -73,9 +73,9 @@ You can learn more [here](https://docs.astro.build/en/getting-started/)
 
 The concept of a layout componet & different pages in the pages directory isn't a new thing to me. The only thing I had to learn when making a layout component is that you need to inset a `<slot />` in the layout, this is where the page would basically put it'self in.
 
-**The code below is from the docs**
+My [layout component](./src/layouts/Layout.astro) & my [homepage](./src/pages/index.astro)
 
-My [layout component](./src/layouts/Layout.astro)
+**The code below is from the docs**
 
 ```astro
 ---
@@ -105,8 +105,6 @@ const { title } = Astro.props;
   </body>
 </html>
 ```
-
-My [Homepage](./src/pages/index.astro)
 
 ```astro
 ---
@@ -158,6 +156,32 @@ import DashboardCard from '../components/DashboardCard';
 ```
 
 #### Sharing state between islands
+
+This was the trickiest part for me, but before I explain 'sharing state between islands', we first need to understand why we had to share state between them in the first place.
+
+Making a component, which has it's own state is easy, but when the user clicks `Daily`, `Weekly` or `Monthly`, the content of each [Dashboard](./src/components/DashboardCard.tsx) has to update and display the correct information. In order to achieve this, I made the use of [Nano Store](https://docs.astro.build/en/core-concepts/sharing-state/).
+
+Using [Nano Store](https://docs.astro.build/en/core-concepts/sharing-state/) reminded me of [Redux](https://redux.js.org/) and [React's](https://react.dev/) [useContext hook](https://react.dev/reference/react/useContext).
+
+The store can be found [here](./src/timeFramesStore.ts), let's go over it line by line:
+
+```ts
+import { atom } from 'nanostores';
+
+type timeFrameTypes = 'Daily' | 'Weekly' | 'Monthly';
+
+export const timeFrames: timeFrameTypes[] = ['Daily', 'Weekly', 'Monthly'];
+
+export const activeTimeFrame = atom<timeFrameTypes>('Weekly');
+```
+
+**line 1** `import { atom } from 'nanostores';` - I import `atom` from nanostores. The reason I used atom is because we are going to store a string, nothing complicated.
+
+**line 3** `type timeFrameTypes = 'Daily' | 'Weekly' | 'Monthly';` - This is typescript, and I wanted to leverage it by restricting the type of value the string would contain, Similar to using a enum. because of this, we know that there can only be 3 different values, & when we set the value, we are only restricted to those 3 values. This is why I love [Typescript](https://www.typescriptlang.org/).
+
+**line 5** `export const timeFrames: timeFrameTypes[] = ['Daily', 'Weekly', 'Monthly'];` - I wanted to store the 3 different values in an array, this is important for [buttons component](./src/components/Buttons.tsx). I used this array to display the 3 different time frames & assign event listeners to them.
+
+**line 6** `export const activeTimeFrame = atom<timeFrameTypes>('Weekly');` - Export the store.
 
 ### Continued development
 
