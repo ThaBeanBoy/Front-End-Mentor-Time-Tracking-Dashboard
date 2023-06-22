@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 
 import userDP from '../images/image-jeremy.png';
-import { Image, Picture } from '@astrojs/image/components';
+import { Image } from '@astrojs/image/components';
 
 import Buttons from '../components/Buttons';
 import DashboardCard from '../components/DashboardCard';
@@ -55,7 +55,7 @@ loadImageAndColor(data[5], '/icon-self-care.svg', 'hsl(43, 84%, 65%)');
             illustration={illustration}
             tframes={timeframes}
             bgColor={bgColor}
-            client:load
+            client:idle
           />
         ))
       }

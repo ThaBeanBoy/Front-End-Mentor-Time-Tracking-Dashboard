@@ -43,7 +43,7 @@ export default function DashboardCard({
         <div className='mb-8 flex w-full items-center justify-between'>
           <p className='capitalize text-white'>{title}</p>
           <button>
-            <img src='/icon-ellipsis.svg' alt='' />
+            <img src='/icon-ellipsis.svg' alt='extra' width={21} height={5} />
           </button>
         </div>
         <div className='flex items-center justify-between brk:flex-col brk:items-start brk:justify-start'>
