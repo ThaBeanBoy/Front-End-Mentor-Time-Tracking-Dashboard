@@ -65,19 +65,19 @@ Users should be able to:
 
 #### Learning Astro
 
-Astro is used to build static sites that supports multiple javascript frameworks & libraries, while shipping little javascript. From my understanding, Astro islands are similar to react components, but this time, but this time, islands are converted to static HTML. you caan find more information on the Astro's islands architecture [here](https://docs.astro.build/en/concepts/islands/)
+Astro is used to build static sites that support multiple javascript frameworks & libraries while shipping little javascript. From my understanding, Astro islands are similar to react components, but this time, islands are converted to static HTML. you can find more information on Astro's islands architecture [here](https://docs.astro.build/en/concepts/islands/)
 
-Unlike other Frameworks & libraries I've worked with in the past, [Astro](https://astro.build/) generates a MPA (Multi-Page Application) intstead of an SPA (Single-Page Application). More details on this can be found [here](https://docs.astro.build/en/concepts/mpa-vs-spa/).
+Unlike other Frameworks & libraries I've worked with in the past, [Astro](https://astro.build/) generates an MPA (Multi-Page Application) instead of an SPA (Single-Page Application). More details on this can be found [here](https://docs.astro.build/en/concepts/mpa-vs-spa/).
 
 You can learn more [here](https://docs.astro.build/en/getting-started/)
 
 #### Layout & Pages
 
-The concept of a layout componet & different pages in the pages directory isn't a new thing to me. The only thing I had to learn when making a layout component is that you need to inset a `<slot />` in the layout, this is where the page would basically put it'self in.
+The concept of a layout component & different pages in the pages directory isn't a new thing to me. The only thing I had to learn when making a layout component is that you need to insert a `<slot />` in the layout, this is where the page would put itself in.
 
 My [layout component](./src/layouts/Layout.astro) & my [homepage](./src/pages/index.astro)
 
-**The code below is from the docs**
+**The code below is from the astro docs**
 
 ```astro
 ---
@@ -120,9 +120,9 @@ import MySiteLayout from '../layouts/MySiteLayout.astro';
 
 #### Installing astro packages
 
-One of the most enjoyable things about Astro is working the CLI. This is a simple project, but when installing packages from astro, I didn't have to touch any config files. This seems small, but it automatically added tailwind, image & react to the [astro config](./astro.config.mjs).
+One of the most enjoyable things about Astro is working with the CLI. This is a simple project, but when installing packages from Astro, I didn't have to touch any config files. This seems small, but it automatically added tailwind, image & react to the [astro config](./astro.config.mjs).
 
-For example, when I wanted to use [Tailwind](https://styled-components.com/), I simply ran the following command in the terminsal, `npx astro add tailwind`. I didn't have to manually install tailwind, configure [astro](./astro.config.mjs) etc... 😃
+For example, when I wanted to use [Tailwind](https://styled-components.com/), I simply ran the following command in the terminal, `npx astro add tailwind`. I didn't have to manually install tailwind, configure [astro](./astro.config.mjs) etc... 😃
 
 #### Using Js Frameworks & Libraries
 
@@ -134,7 +134,7 @@ npx astro add react
 
 I placed my react components inside the [components directory](./src/components/) & used the `.tsx` file extension.
 
-importing and using the components was easy, this is how it looks like:
+Importing and using the components was easy, this is how it looks like:
 
 ```astro
 ---
@@ -163,7 +163,7 @@ import DashboardCard from '../components/DashboardCard';
 
 This was the trickiest part for me, but before I explain 'sharing state between islands', we first need to understand why we had to share state between them in the first place.
 
-Making a component, which has it's own state is easy, but when the user clicks `Daily`, `Weekly` or `Monthly`, the content of each [Dashboard](./src/components/DashboardCard.tsx) has to update and display the correct information. In order to achieve this, I made the use of [Nano Store](https://docs.astro.build/en/core-concepts/sharing-state/).
+Making a component, which has its own state is easy, but when the user clicks `Daily`, `Weekly` or `Monthly`, the content of each [Dashboard](./src/components/DashboardCard.tsx) has to update and display the correct information. In order to achieve this, I made use of [Nano Store](https://docs.astro.build/en/core-concepts/sharing-state/).
 
 Using [Nano Store](https://docs.astro.build/en/core-concepts/sharing-state/) reminded me of [Redux](https://redux.js.org/) and [React's](https://react.dev/) [useContext hook](https://react.dev/reference/react/useContext).
 
@@ -181,7 +181,7 @@ export const activeTimeFrame = atom<timeFrameTypes>('Weekly');
 
 `import { atom } from 'nanostores';` - I import `atom` from nanostores. The reason I used atom is because we are going to store a string, nothing complicated.
 
-`type timeFrameTypes = 'Daily' | 'Weekly' | 'Monthly';` - This is typescript, and I wanted to leverage it by restricting the type of value the string would contain, Similar to using a enum. because of this, we know that there can only be 3 different values, & when we set the value, we are only restricted to those 3 values. This is why I love [Typescript](https://www.typescriptlang.org/).
+`type timeFrameTypes = 'Daily' | 'Weekly' | 'Monthly';` - This is typescript, and I wanted to leverage it by restricting the type of value the string would contain, Similar to using an enum. because of this, we know that there can only be 3 different values, & when we set the value, we are only restricted to those 3 values. This is why I love [Typescript](https://www.typescriptlang.org/).
 
 `export const timeFrames: timeFrameTypes[] = ['Daily', 'Weekly', 'Monthly'];` - I wanted to store the 3 different values in an array, this is important for [buttons component](./src/components/Buttons.tsx). I used this array to display the 3 different time frames & assign event listeners to them.
 
@@ -222,9 +222,9 @@ export default function Buttons() {
 }
 ```
 
-`import { timeFrames, activeTimeFrame } from '../timeFramesStore';` - activeTimeFrame stores the current value/state. in order to get it's value, we place the store inside the useStore method. I remember while reading the docs, it said that you have to prefix the variable name with `$`. This is how we end up with `const $active = useStore(activeTimeFrame);`.
+`import { timeFrames, activeTimeFrame } from '../timeFramesStore';` - activeTimeFrame stores the current value/state. in order to get its value, we place the store inside the useStore method. I remember while reading the docs, it said that you have to prefix the variable name with `$`. This is how we end up with `const $active = useStore(activeTimeFrame);`.
 
-in order to update the state, we use the `.set(/* new state */)` method
+in order to update the state, we use the `.set(/* new state */)` method.
 
 ### Continued development
 
@@ -236,7 +236,7 @@ It seems like I will have to learn [client:directives](https://docs.astro.build/
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
+- [Astro Docs](https://docs.astro.build/) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
 - [Tailwind Docs](https://tailwindcss.com/docs/) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
 
 ## Perfomance
